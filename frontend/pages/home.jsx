@@ -1,26 +1,67 @@
 import Layout from "../components/Layout";
 import Status from "../components/Status";
 import Profile from "../components/Profile";
-import { useUser } from "../contexts/authContext";
 import { SimpleGrid } from "@mantine/core";
+import { getSession } from "next-auth/react";
+import { useState, useEffect } from "react";
+import { fetcher } from "../config/fetcher";
 
-export default function HeroBackground() {
-  const { state } = useUser();
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: { session },
+  };
+}
+
+export default function HeroBackground({ session }) {
+  const { user, token } = session;
+  const [loading, setLoading] = useState(false);
+  const [detail, setDetail] = useState(null);
+
+  const getUserDetail = async (token) => {
+    setLoading(true);
+    const res = await fetcher.get("/users/me", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setDetail(res.data);
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getUserDetail(token);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <Layout>
+    <Layout user={user}>
       <SimpleGrid pt={25} cols={2}>
         <Profile
-          avatar="/profile.jpg"
+          avatar={user.image || "/profile.jpg"}
           title="Software engineer"
-          name={state.user?.name || ""}
-          email={state.user?.email || ""}
+          name={user.name || ""}
+          email={user.email || ""}
         />
         <Status
           data={[
             {
               label: "Calories",
-              stats: state.user?.calorie.calorie || 0,
+              stats: detail?.calorie?.calorie,
               progress: 0,
               color: "red",
               icon: "flame",
@@ -28,7 +69,7 @@ export default function HeroBackground() {
             },
             {
               label: "Fat",
-              stats: state.user?.fat.fat || 0,
+              stats: detail?.fat?.fat,
               progress: 0,
               color: "blue",
               icon: "droplet",
@@ -36,7 +77,7 @@ export default function HeroBackground() {
             },
             {
               label: "Carbs",
-              stats: state.user?.carbohydrate.carbohydrate || 0,
+              stats: detail?.carbohydrate?.carbohydrate,
               progress: 0,
               color: "green",
               icon: "leaf",
@@ -44,7 +85,7 @@ export default function HeroBackground() {
             },
             {
               label: "Protein",
-              stats: state.user?.protein?.protein || 0,
+              stats: detail?.protein?.protein,
               progress: 0,
               color: "orange",
               icon: "dna",

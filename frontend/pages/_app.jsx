@@ -7,7 +7,7 @@ import "@fontsource/poppins/800.css";
 import "@fontsource/poppins/900.css";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
-import { AuthProvider } from "../contexts/authContext";
+import { SessionProvider } from "next-auth/react";
 
 function PREPLAND(props) {
   const { Component, pageProps } = props;
@@ -24,7 +24,7 @@ function PREPLAND(props) {
         <link rel="icon" href="/prepland.ico" />
       </Head>
 
-      <AuthProvider>
+      <SessionProvider session={pageProps.session}>
         <MantineProvider
           withGlobalStyles
           withNormalizeCSS
@@ -36,7 +36,7 @@ function PREPLAND(props) {
         >
           <Component {...pageProps} />
         </MantineProvider>
-      </AuthProvider>
+      </SessionProvider>
     </>
   );
 }

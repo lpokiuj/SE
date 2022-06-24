@@ -23,6 +23,7 @@ import {
   ChevronDown,
 } from "tabler-icons-react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export const HEADER_HEIGHT = 65;
 
@@ -184,10 +185,7 @@ export default function HeaderTabsUnverified({ user, tabs }) {
             <Menu.Item icon={<SwitchHorizontal size={14} />}>
               Change account
             </Menu.Item>
-            <Menu.Item
-              icon={<Login size={14} />}
-              onClick={() => router.push("/login")}
-            >
+            <Menu.Item icon={<Login size={14} />} onClick={() => signIn()}>
               Login
             </Menu.Item>
           </Menu>

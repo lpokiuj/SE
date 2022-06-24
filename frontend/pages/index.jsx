@@ -1,27 +1,38 @@
-import React from 'react';
-import { Title, Text, Container, Button, Overlay, createStyles, Tabs } from '@mantine/core';
-import Link from 'next/link';
-import HeaderTabsUnverified, { HEADER_HEIGHT } from '../components/AppHeaderUnverified';
+import React from "react";
+import {
+  Title,
+  Text,
+  Container,
+  Button,
+  Overlay,
+  createStyles,
+  Tabs,
+} from "@mantine/core";
+import Link from "next/link";
+import HeaderTabsUnverified, {
+  HEADER_HEIGHT,
+} from "../components/AppHeaderUnverified";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
-    position: 'relative',
+    position: "relative",
     minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
     paddingTop: 323,
     paddingBottom: 320,
     backgroundImage:
-      'url(https://images.unsplash.com/photo-1591189863430-ab87e120f312?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+      "url(https://images.unsplash.com/photo-1591189863430-ab87e120f312?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80)",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
 
-    '@media (max-width: 520px)': {
+    "@media (max-width: 520px)": {
       paddingTop: 80,
       paddingBottom: 50,
     },
   },
 
   inner: {
-    position: 'relative',
+    position: "relative",
     zIndex: 1,
   },
 
@@ -33,12 +44,12 @@ const useStyles = createStyles((theme) => ({
     paddingRight: theme.spacing.md,
     color: theme.white,
     marginBottom: theme.spacing.xs,
-    textAlign: 'center',
+    textAlign: "center",
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
 
-    '@media (max-width: 520px)': {
+    "@media (max-width: 520px)": {
       fontSize: 28,
-      textAlign: 'left',
+      textAlign: "left",
     },
   },
 
@@ -48,23 +59,23 @@ const useStyles = createStyles((theme) => ({
 
   description: {
     color: theme.colors.gray[0],
-    textAlign: 'center',
+    textAlign: "center",
 
-    '@media (max-width: 520px)': {
+    "@media (max-width: 520px)": {
       fontSize: theme.fontSizes.md,
-      textAlign: 'left',
+      textAlign: "left",
     },
   },
 
   controls: {
     marginTop: theme.spacing.xl * 1.5,
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     paddingLeft: theme.spacing.md,
     paddingRight: theme.spacing.md,
 
-    '@media (max-width: 520px)': {
-      flexDirection: 'column',
+    "@media (max-width: 520px)": {
+      flexDirection: "column",
     },
   },
 
@@ -72,12 +83,12 @@ const useStyles = createStyles((theme) => ({
     height: 42,
     fontSize: theme.fontSizes.md,
 
-    '&:not(:first-of-type)': {
+    "&:not(:first-of-type)": {
       marginLeft: theme.spacing.md,
     },
 
-    '@media (max-width: 520px)': {
-      '&:not(:first-of-type)': {
+    "@media (max-width: 520px)": {
+      "&:not(:first-of-type)": {
         marginTop: theme.spacing.md,
         marginLeft: 0,
       },
@@ -86,44 +97,53 @@ const useStyles = createStyles((theme) => ({
 
   secondaryControl: {
     color: theme.white,
-    backgroundColor: 'rgba(255, 255, 255, .4)',
+    backgroundColor: "rgba(255, 255, 255, .4)",
 
-    '&:hover': {
-      backgroundColor: 'rgba(255, 255, 255, .45) !important',
+    "&:hover": {
+      backgroundColor: "rgba(255, 255, 255, .45) !important",
     },
   },
 }));
 
 const user = {
-  name: 'username',
-  email: '',
-  image: '',
-}
-const tabs = ['Home', 'Meal Plan', 'Grocery List', 'Price List', 'Article', 'News'];
+  name: "username",
+  email: "",
+  image: "",
+};
+const tabs = [
+  "Home",
+  "Meal Plan",
+  "Grocery List",
+  "Price List",
+  "Article",
+  "News",
+];
 
 export default function Index() {
   const { classes, cx } = useStyles();
+
   return (
     <div>
       <HeaderTabsUnverified user={user}>
-      <Link href="/home" passHref>
-        <Tabs.Tab></Tabs.Tab>
-      </Link>
+        <Link href="/home" passHref>
+          <Tabs.Tab></Tabs.Tab>
+        </Link>
       </HeaderTabsUnverified>
       <div className={classes.wrapper}>
         <Overlay color="#000" opacity={0.65} zIndex={1} />
 
         <div className={classes.inner}>
           <Title className={classes.title}>
-          Your personal meal prepping discoveries{' '}
+            Your personal meal prepping discoveries{" "}
             <Text component="span" inherit className={classes.highlight}>
-            delivery to you
+              delivery to you
             </Text>
           </Title>
 
           <Container size={640}>
             <Text size="lg" className={classes.description}>
-            We're still on your browser for a while, but we'll get into your smartphone soon always support PREPLAND to keep us growing
+              We're still on your browser for a while, but we'll get into your
+              smartphone soon always support PREPLAND to keep us growing
             </Text>
             <Text className={classes.description}>❤️❤️❤️</Text>
           </Container>
@@ -136,7 +156,10 @@ export default function Index() {
             </Link>
 
             <Link href="https://youtube.com" passHref>
-              <Button className={cx(classes.control, classes.secondaryControl)} size="lg">
+              <Button
+                className={cx(classes.control, classes.secondaryControl)}
+                size="lg"
+              >
                 Live demo
               </Button>
             </Link>

@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { useUser } from "../contexts/authContext";
 import React, { useState } from "react";
 import {
   createStyles,
@@ -27,6 +26,7 @@ import {
   ChevronDown,
 } from "tabler-icons-react";
 import Link from "next/link";
+import { signOut, useSession } from "next-auth/react";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -97,8 +97,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export default function HeaderTabs({ tabs }) {
-  const { state, dispatch } = useUser();
+export default function HeaderTabs({ user, tabs }) {
   const router = useRouter(); // routing
 
   const { classes, theme, cx } = useStyles();
@@ -159,8 +158,8 @@ export default function HeaderTabs({ tabs }) {
               >
                 <Group spacing={7}>
                   <Avatar
-                    src={state.user?.image || "profile.jpg"}
-                    alt={state.user?.name}
+                    src={user?.image || "profile.jpg"}
+                    alt={user?.name}
                     radius="xl"
                     size={20}
                   />
@@ -170,7 +169,7 @@ export default function HeaderTabs({ tabs }) {
                     sx={{ lineHeight: 1, color: theme.white }}
                     mr={3}
                   >
-                    {state.user?.name || ""}
+                    {user?.name || ""}
                   </Text>
                   <ChevronDown size={12} />
                 </Group>
@@ -199,10 +198,7 @@ export default function HeaderTabs({ tabs }) {
             <Link href="/" passHref>
               <Menu.Item
                 icon={<Logout size={14} />}
-                onClick={() => {
-                  dispatch({ type: "logout" });
-                  router.push("/");
-                }}
+                onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Logout
               </Menu.Item>

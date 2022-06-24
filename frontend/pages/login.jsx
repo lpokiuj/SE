@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TextInput,
   PasswordInput,
@@ -13,13 +13,23 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import Link from "next/link";
-import { useUser } from "../contexts/authContext";
 import { loginUser } from "../lib/user/api";
 import { useRouter } from "next/router";
+import { getCsrfToken, signIn } from "next-auth/react";
 
-export default function Login() {
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
+}
+
+export default function Login({ csrfToken }) {
   const router = useRouter();
-  const { dispatch } = useUser();
+  const [error, setError] = useState(null);
+  const [isSubmiting, setIsSubmitting] = useState(false);
+
   const form = useForm({
     initialValues: {
       email: "",
@@ -33,29 +43,27 @@ export default function Login() {
   });
 
   const handleSubmit = async (values) => {
-    const [error, response] = await loginUser({
+    setIsSubmitting(true);
+    const res = await signIn("credentials", {
+      redirect: false,
       email: values.email,
       password: values.password,
+      callbackUrl: "/home",
     });
 
-    if (error) {
-      form.reset();
+    if (res?.error) {
+      setError(res.error);
     } else {
-      dispatch({
-        type: "LOGIN",
-        payload: {
-          user: response.user,
-          token: response.token,
-        },
-      });
-
-      router.push("/home");
-      form.reset();
+      setError(null);
     }
+
+    if (res.url) router.push(res.url);
+    setIsSubmitting(false);
   };
 
   return (
     <Container size={500} my={40}>
+      <div>{error}</div>
       <Title
         align="center"
         sx={(theme) => ({
@@ -78,6 +86,8 @@ export default function Login() {
 
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
+          <input hidden name={csrfToken} defaultValue={csrfToken} />
+
           <TextInput
             label="Username / Email address"
             placeholder="username or your@email.com"
@@ -95,7 +105,7 @@ export default function Login() {
             required
             {...form.getInputProps("password")}
           />
-          <Button type="submit" fullWidth mt="xl">
+          <Button loading={isSubmiting} type="submit" fullWidth mt="xl">
             LOGIN
           </Button>
         </form>

@@ -12,10 +12,17 @@ const tabs = [
   { link: "/news", label: "News" },
 ];
 
-export default function Layout({ children }) {
+export default function Layout({ user, children }) {
   return (
     <div>
-      <HeaderTabs tabs={tabs} />
+      <HeaderTabs
+        user={{
+          name: user.name,
+          image: user.image,
+          email: user.email,
+        }}
+        tabs={tabs}
+      />
       <Container>{children}</Container>
       <Footer />
     </div>
