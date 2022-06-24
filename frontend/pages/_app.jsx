@@ -7,6 +7,7 @@ import "@fontsource/poppins/800.css";
 import "@fontsource/poppins/900.css";
 import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+import { AuthProvider } from "../contexts/authContext";
 
 function PREPLAND(props) {
   const { Component, pageProps } = props;
@@ -23,17 +24,19 @@ function PREPLAND(props) {
         <link rel="icon" href="/prepland.ico" />
       </Head>
 
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          colorScheme: "light",
-          fontFamily: "Poppins, sans-serif",
-          headings: { fontFamily: "Poppins, sans-serif" },
-        }}
-      >
-        <Component {...pageProps} />
-      </MantineProvider>
+      <AuthProvider>
+        <MantineProvider
+          withGlobalStyles
+          withNormalizeCSS
+          theme={{
+            colorScheme: "light",
+            fontFamily: "Poppins, sans-serif",
+            headings: { fontFamily: "Poppins, sans-serif" },
+          }}
+        >
+          <Component {...pageProps} />
+        </MantineProvider>
+      </AuthProvider>
     </>
   );
 }

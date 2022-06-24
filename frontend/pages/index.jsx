@@ -1,11 +1,12 @@
 import React from 'react';
 import { Title, Text, Container, Button, Overlay, createStyles, Tabs } from '@mantine/core';
 import Link from 'next/link';
-import HeaderTabs from '../components/AppHeaderUnverified';
+import HeaderTabsUnverified, { HEADER_HEIGHT } from '../components/AppHeaderUnverified';
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
     position: 'relative',
+    minHeight: `calc(100vh - ${HEADER_HEIGHT}px)`,
     paddingTop: 323,
     paddingBottom: 320,
     backgroundImage:
@@ -104,11 +105,11 @@ export default function Index() {
   const { classes, cx } = useStyles();
   return (
     <div>
-      <HeaderTabs user={user}>
+      <HeaderTabsUnverified user={user}>
       <Link href="/home" passHref>
         <Tabs.Tab></Tabs.Tab>
       </Link>
-      </HeaderTabs>
+      </HeaderTabsUnverified>
       <div className={classes.wrapper}>
         <Overlay color="#000" opacity={0.65} zIndex={1} />
 

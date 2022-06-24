@@ -1,5 +1,6 @@
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useRouter } from "next/router";
+import { useUser } from "../contexts/authContext";
+import React, { useState } from "react";
 import {
   createStyles,
   Container,
@@ -12,8 +13,8 @@ import {
   Tabs,
   Burger,
   Image,
-} from '@mantine/core';
-import { useBooleanToggle } from '@mantine/hooks';
+} from "@mantine/core";
+import { useBooleanToggle } from "@mantine/hooks";
 import {
   Logout,
   Heart,
@@ -24,8 +25,8 @@ import {
   Trash,
   SwitchHorizontal,
   ChevronDown,
-} from 'tabler-icons-react';
-import Link from 'next/link';
+} from "tabler-icons-react";
+import Link from "next/link";
 
 const useStyles = createStyles((theme) => ({
   header: {
@@ -39,8 +40,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   userMenu: {
-    [theme.fn.smallerThan('xs')]: {
-      display: 'none',
+    [theme.fn.smallerThan("xs")]: {
+      display: "none",
     },
   },
 
@@ -48,31 +49,33 @@ const useStyles = createStyles((theme) => ({
     color: theme.white,
     padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
     borderRadius: theme.radius.sm,
-    transition: 'background-color 100ms ease',
+    transition: "background-color 100ms ease",
 
-    '&:hover': {
-      backgroundColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5],
+    "&:hover": {
+      backgroundColor:
+        theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 7 : 5],
     },
   },
 
   burger: {
-    [theme.fn.largerThan('xs')]: {
-      display: 'none',
+    [theme.fn.largerThan("xs")]: {
+      display: "none",
     },
   },
 
   userActive: {
-    backgroundColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5],
+    backgroundColor:
+      theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 7 : 5],
   },
 
   tabs: {
-    [theme.fn.smallerThan('sm')]: {
-      display: 'none',
+    [theme.fn.smallerThan("sm")]: {
+      display: "none",
     },
   },
 
   tabsList: {
-    borderBottom: '0 !important',
+    borderBottom: "0 !important",
   },
 
   tabControl: {
@@ -80,49 +83,58 @@ const useStyles = createStyles((theme) => ({
     height: 38,
     color: `${theme.white} !important`,
 
-    '&:hover': {
-      backgroundColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 7 : 5],
+    "&:hover": {
+      backgroundColor:
+        theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 7 : 5],
     },
   },
 
   tabControlActive: {
-    color: `${theme.colorScheme === 'dark' ? theme.white : theme.black} !important`,
+    color: `${
+      theme.colorScheme === "dark" ? theme.white : theme.black
+    } !important`,
     borderColor: `${theme.colors[theme.primaryColor][6]} !important`,
   },
 }));
 
-export default function HeaderTabs({ user, tabs }) {
+export default function HeaderTabs({ tabs }) {
+  const { state, dispatch } = useUser();
   const router = useRouter(); // routing
 
   const { classes, theme, cx } = useStyles();
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  const [activeTab, setActiveTab] = useState(() => { // liat route "/home" , terus set tab nya active
+  const [activeTab, setActiveTab] = useState(() => {
+    // liat route "/home" , terus set tab nya active
     const { pathname } = router;
     const tabIndex = tabs.findIndex((tab) => tab.link === pathname);
     return tabIndex !== -1 ? tabIndex : 0;
   });
-  const onTabChange = (index) => { // handle kalo misal user click tab lain selain yang active
+  const onTabChange = (index) => {
+    // handle kalo misal user click tab lain selain yang active
     setActiveTab(index);
     router.push(tabs[index].link);
-  }
+  };
 
-
-  const items = tabs.map((tab) => <Tabs.Tab label={tab.label} key={tab.label} tabKey={tab.link} />);
+  const items = tabs.map((tab) => (
+    <Tabs.Tab label={tab.label} key={tab.label} tabKey={tab.link} />
+  ));
 
   return (
     <div className={classes.header}>
       <Container className={classes.mainSection}>
         <Group position="apart">
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: "flex" }}>
             <Image
               radius="md"
               src="/PreplandLogo.png"
               alt="Random unsplash image"
               width={25}
             />
-            <Text color={'white'} weight='700'>PREPLAND</Text>
+            <Text color={"white"} weight="700">
+              PREPLAND
+            </Text>
           </div>
           <Burger
             opened={opened}
@@ -141,12 +153,27 @@ export default function HeaderTabs({ user, tabs }) {
             onOpen={() => setUserMenuOpened(true)}
             control={
               <UnstyledButton
-                className={cx(classes.user, { [classes.userActive]: userMenuOpened })}
+                className={cx(classes.user, {
+                  [classes.userActive]: userMenuOpened,
+                })}
               >
                 <Group spacing={7}>
-                  <Avatar src={user.image} alt={user.name} radius="xl" size={20} />
-                  <Text weight={500} size="sm" sx={{ lineHeight: 1, color: theme.white }} mr={3}>
-                    {user.name}
+                  <Avatar
+                    src={
+                      state.user?.image ||
+                      "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=255&q=80"
+                    }
+                    alt={state.user?.name}
+                    radius="xl"
+                    size={20}
+                  />
+                  <Text
+                    weight={500}
+                    size="sm"
+                    sx={{ lineHeight: 1, color: theme.white }}
+                    mr={3}
+                  >
+                    {state.user?.name || ""}
                   </Text>
                   <ChevronDown size={12} />
                 </Group>
@@ -159,18 +186,34 @@ export default function HeaderTabs({ user, tabs }) {
             <Menu.Item icon={<Star size={14} color={theme.colors.yellow[6]} />}>
               Saved posts
             </Menu.Item>
-            <Menu.Item icon={<Message size={14} color={theme.colors.blue[6]} />}>
+            <Menu.Item
+              icon={<Message size={14} color={theme.colors.blue[6]} />}
+            >
               Your comments
             </Menu.Item>
             <Divider />
             <Menu.Label>Settings</Menu.Label>
-            <Menu.Item icon={<Settings size={14} />}>Account settings</Menu.Item>
-            <Menu.Item icon={<SwitchHorizontal size={14} />}>Change account</Menu.Item>
+            <Menu.Item icon={<Settings size={14} />}>
+              Account settings
+            </Menu.Item>
+            <Menu.Item icon={<SwitchHorizontal size={14} />}>
+              Change account
+            </Menu.Item>
             <Link href="/" passHref>
-              <Menu.Item icon={<Logout size={14} />}>Logout</Menu.Item>
+              <Menu.Item
+                icon={<Logout size={14} />}
+                onClick={() => {
+                  dispatch({ type: "logout" });
+                  router.push("/");
+                }}
+              >
+                Logout
+              </Menu.Item>
             </Link>
             <Menu.Label>Danger zone</Menu.Label>
-            <Menu.Item icon={<PlayerPause size={14} />}>Pause subscription</Menu.Item>
+            <Menu.Item icon={<PlayerPause size={14} />}>
+              Pause subscription
+            </Menu.Item>
             <Menu.Item color="red" icon={<Trash size={14} />}>
               Delete account
             </Menu.Item>
