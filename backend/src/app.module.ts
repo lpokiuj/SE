@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { PostModule } from './post/post.module';
 import { UserEntity } from './users/entities/user.entity';
+import { CalorieModule } from './calories/calorie.module';
+import { CalorieEntity } from './calories/entities/calorie.entity';
 
 @Module({
     imports: [
@@ -25,7 +27,10 @@ import { UserEntity } from './users/entities/user.entity';
                     username: configService.get('DB_USERNAME'),
                     password: configService.get('DB_PASSWORD'),
                     database: configService.get('DB_DATABASE'),
-                    entities: [UserEntity],
+                    entities: [
+                        UserEntity,
+                        CalorieEntity
+                    ],
                     synchronize: true,
                 };
             },
@@ -33,6 +38,7 @@ import { UserEntity } from './users/entities/user.entity';
         AuthModule,
         UsersModule,
         PostModule,
+        CalorieModule,
     ],
     controllers: [AppController],
     providers: [

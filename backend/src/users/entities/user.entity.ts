@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { CalorieEntity } from 'src/calories/entities/calorie.entity';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -13,4 +14,8 @@ export class UserEntity {
 
     @Column()
     password: string;
+
+    @OneToOne(() => CalorieEntity)
+    @JoinColumn()
+    calorie: CalorieEntity
 }
