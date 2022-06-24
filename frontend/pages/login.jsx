@@ -30,9 +30,9 @@ export default function Login() {
     <Container size={500} my={40}>
       <Title
         align="center"
-        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900, color:"#228BE6" })}
+        sx={(theme) => ({ fontFamily: `Greycliff CF, ${theme.fontFamily}`, fontWeight: 900, color: "#228BE6" })}
       >
-        WELCOME TO PREPLAND!
+        WELCOME BACK!
       </Title>
 
       <Text color="dimmed" size="sm" align="center" mt={5}>
@@ -64,7 +64,7 @@ export default function Login() {
             size="md"
             required
           />
-          
+
         </form>
         <Group position="apart" mt="md">
           <Checkbox label="Remember me" />

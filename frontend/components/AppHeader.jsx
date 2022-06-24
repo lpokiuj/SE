@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import {
   createStyles,
@@ -91,11 +92,24 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function HeaderTabs({ user, tabs }) {
+  const router = useRouter(); // routing
+
   const { classes, theme, cx } = useStyles();
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
-  const items = tabs.map((tab) => <Tabs.Tab label={tab} key={tab} />);
+  const [activeTab, setActiveTab] = useState(() => { // liat route "/home" , terus set tab nya active
+    const { pathname } = router;
+    const tabIndex = tabs.findIndex((tab) => tab.link === pathname);
+    return tabIndex !== -1 ? tabIndex : 0;
+  });
+  const onTabChange = (index) => { // handle kalo misal user click tab lain selain yang active
+    setActiveTab(index);
+    router.push(tabs[index].link);
+  }
+
+
+  const items = tabs.map((tab) => <Tabs.Tab label={tab.label} key={tab.label} tabKey={tab.link} />);
 
   return (
     <div className={classes.header}>
@@ -172,6 +186,8 @@ export default function HeaderTabs({ user, tabs }) {
             tabControl: classes.tabControl,
             tabActive: classes.tabControlActive,
           }}
+          active={activeTab}
+          onTabChange={onTabChange}
         >
           {items}
         </Tabs>
