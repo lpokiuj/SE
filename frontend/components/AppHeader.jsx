@@ -92,16 +92,18 @@ const useStyles = createStyles((theme) => ({
 }));
 
 export default function HeaderTabs({ user, tabs }) {
-  const router = useRouter();
+  const router = useRouter(); // routing
+
   const { classes, theme, cx } = useStyles();
   const [opened, toggleOpened] = useBooleanToggle(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
-  const [activeTab, setActiveTab] = useState(() => {
+
+  const [activeTab, setActiveTab] = useState(() => { // liat route "/home" , terus set tab nya active
     const { pathname } = router;
     const tabIndex = tabs.findIndex((tab) => tab.link === pathname);
     return tabIndex !== -1 ? tabIndex : 0;
   });
-  const onTabChange = (index) => {
+  const onTabChange = (index) => { // handle kalo misal user click tab lain selain yang active
     setActiveTab(index);
     router.push(tabs[index].link);
   }

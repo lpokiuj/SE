@@ -2,10 +2,10 @@ import React from 'react';
 import { Title } from '@mantine/core';
 import Layout from '../components/Layout';
 
-export default function MealPlanPage() {
+export default function HeroBackground() {
   return (
     <Layout>
-      <Title>Meal Plan Page</Title>
+      <Title>Article</Title>
     </Layout>
   );
 }

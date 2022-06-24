@@ -8,7 +8,6 @@ import {
 	Text,
 	Container,
 	Button,
-	form,
 } from '@mantine/core';
 import Link from 'next/link';
 
