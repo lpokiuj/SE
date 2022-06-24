@@ -33,7 +33,7 @@ export default function Register() {
       },
       password: (value, values) => {
         const regex =
-          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/;
         if (!regex.test(value)) {
           return "Password must be at least 8 characters, an uppercase, a symbol and a number";
         }

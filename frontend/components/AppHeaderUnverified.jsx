@@ -184,9 +184,12 @@ export default function HeaderTabsUnverified({ user, tabs }) {
             <Menu.Item icon={<SwitchHorizontal size={14} />}>
               Change account
             </Menu.Item>
-            <Link href="/register" passHref>
-              <Menu.Item icon={<Login size={14} />}>Login</Menu.Item>
-            </Link>
+            <Menu.Item
+              icon={<Login size={14} />}
+              onClick={() => router.push("/login")}
+            >
+              Login
+            </Menu.Item>
           </Menu>
         </Group>
       </Container>
