@@ -5,10 +5,10 @@ import Link from 'next/link';
 import HeaderTabs from '../components/AppHeader';
 
 
-export default function HeroBackground() {
-	return (
-		<Layout>
-			<Title>Home</Title>
-		</Layout>
-	);
+export default function MealPlanPage() {
+  return (
+    <Layout>
+      <Title>Meal Plan Page</Title>
+    </Layout>
+  );
 }
