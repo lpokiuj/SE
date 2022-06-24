@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CalorieService } from 'src/calories/calorie.service';
+import { CarbohydrateService } from 'src/carbohydrate/carbohydrate.service';
 import { FatService } from 'src/fat/fat.service';
 import { Repository } from 'typeorm';
 import { UserDto } from './dto/user.dto';
@@ -12,15 +13,18 @@ export class UsersService {
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
         private readonly calorieService: CalorieService,
-        private readonly fatService: FatService
+        private readonly fatService: FatService,
+        private readonly carbohydrateService: CarbohydrateService
     ) {}
 
     async create(userDto: UserDto) {
         const user = this.userRepository.create(userDto);
         const calorie = await this.calorieService.create();
         const fat = await this.fatService.create();
+        const carbohydrate = await this.carbohydrateService.create();
         user.calorie = calorie;
         user.fat = fat;
+        user.carbohydrate = carbohydrate
         return await this.userRepository.save(user);
     }
 
@@ -31,7 +35,8 @@ export class UsersService {
             },
             relations: {
                 calorie: true,
-                fat: true
+                fat: true,
+                carbohydrate: true
             }
         });
         return user;
@@ -44,7 +49,8 @@ export class UsersService {
             },
             relations: {
                 calorie: true,
-                fat: true
+                fat: true,
+                carbohydrate: true
             }
         });
     }

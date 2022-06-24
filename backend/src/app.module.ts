@@ -12,6 +12,8 @@ import { CalorieModule } from './calories/calorie.module';
 import { CalorieEntity } from './calories/entities/calorie.entity';
 import { FatModule } from './fat/fat.module';
 import { FatEntity } from './fat/entities/fat.entity';
+import { CarbohydrateModule } from './carbohydrate/carbohydrate.module';
+import { CarbohydrateEntity } from './carbohydrate/entities/carbohydrate.entity';
 
 @Module({
     imports: [
@@ -31,7 +33,8 @@ import { FatEntity } from './fat/entities/fat.entity';
                     entities: [
                         UserEntity,
                         CalorieEntity,
-                        FatEntity
+                        FatEntity,
+                        CarbohydrateEntity
                     ],
                     synchronize: true,
                 };
@@ -41,6 +44,7 @@ import { FatEntity } from './fat/entities/fat.entity';
         UsersModule,
         CalorieModule,
         FatModule,
+        CarbohydrateModule,
     ],
     controllers: [AppController],
     providers: [
