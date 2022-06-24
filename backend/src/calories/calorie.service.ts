@@ -6,10 +6,10 @@ import { CalorieEntity } from './entities/calorie.entity';
 
 @Injectable()
 export class CalorieService {
-  constructor(
-      @InjectRepository(CalorieEntity)
-      private readonly calorieRepository: Repository<CalorieEntity>
-  ){}
+    constructor(
+        @InjectRepository(CalorieEntity)
+        private readonly calorieRepository: Repository<CalorieEntity>
+    ){}
 
     async getByID(id: string){
         return await this.calorieRepository.findOneBy({ id: id });

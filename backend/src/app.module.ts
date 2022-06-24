@@ -7,10 +7,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { PostModule } from './post/post.module';
 import { UserEntity } from './users/entities/user.entity';
 import { CalorieModule } from './calories/calorie.module';
 import { CalorieEntity } from './calories/entities/calorie.entity';
+import { FatModule } from './fat/fat.module';
+import { FatEntity } from './fat/entities/fat.entity';
 
 @Module({
     imports: [
@@ -29,7 +30,8 @@ import { CalorieEntity } from './calories/entities/calorie.entity';
                     database: configService.get('DB_DATABASE'),
                     entities: [
                         UserEntity,
-                        CalorieEntity
+                        CalorieEntity,
+                        FatEntity
                     ],
                     synchronize: true,
                 };
@@ -37,8 +39,8 @@ import { CalorieEntity } from './calories/entities/calorie.entity';
         }),
         AuthModule,
         UsersModule,
-        PostModule,
         CalorieModule,
+        FatModule,
     ],
     controllers: [AppController],
     providers: [

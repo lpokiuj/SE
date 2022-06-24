@@ -1,4 +1,5 @@
 import { CalorieEntity } from 'src/calories/entities/calorie.entity';
+import { FatEntity } from 'src/fat/entities/fat.entity';
 import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -17,5 +18,9 @@ export class UserEntity {
 
     @OneToOne(() => CalorieEntity)
     @JoinColumn()
-    calorie: CalorieEntity
+    calorie: CalorieEntity;
+
+    @OneToOne(() => FatEntity)
+    @JoinColumn()
+    fat: FatEntity;
 }
