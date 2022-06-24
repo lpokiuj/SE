@@ -4,8 +4,8 @@ export const AuthContext = createContext();
 
 const initialState = {
   isAuthenticated: false,
-  user: null,
-  token: null,
+  user: localStorage.getItem("user") || null,
+  token: localStorage.getItem("token") || null,
 };
 
 const reducer = (state, action) => {

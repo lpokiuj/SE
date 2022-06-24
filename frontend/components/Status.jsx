@@ -1,16 +1,22 @@
-import React from 'react';
-import { RingProgress, Text, SimpleGrid, Paper, Center, Group } from '@mantine/core';
-import { Flame, Droplet, Leaf, Dna } from 'tabler-icons-react';
+import React from "react";
+import {
+  RingProgress,
+  Text,
+  SimpleGrid,
+  Paper,
+  Center,
+  Group,
+} from "@mantine/core";
+import { Flame, Droplet, Leaf, Dna } from "tabler-icons-react";
 
 const icons = {
   flame: Flame,
   droplet: Droplet,
   leaf: Leaf,
-  dna: Dna
+  dna: Dna,
 };
 
 export default function StatsRing({ data }) {
-  
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
     return (
@@ -33,7 +39,7 @@ export default function StatsRing({ data }) {
               {stat.label}
             </Text>
             <Text weight={700} size="xl">
-              {stat.stats}
+              {stat.stats} {stat.unit}
             </Text>
           </div>
         </Group>
@@ -41,7 +47,7 @@ export default function StatsRing({ data }) {
     );
   });
   return (
-    <SimpleGrid cols={4} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+    <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
       {stats}
     </SimpleGrid>
   );
