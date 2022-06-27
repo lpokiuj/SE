@@ -11,9 +11,8 @@ import { BrandTwitter, BrandYoutube, BrandInstagram } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
   footer: {
-    borderTop: `1px solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
-    }`,
+    borderTop: `1px solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
+      }`,
     backgroundColor: theme.colors[theme.primaryColor][6],
   },
 
@@ -56,13 +55,13 @@ export default function Footer() {
             </Text>
           </div>
           <Group spacing={0} className={classes.links} position="right" noWrap>
-            <ActionIcon size="lg">
+            <ActionIcon component="a" href="https://twitter.com/" target="_blank" size="lg" variant="filled" color="blue">
               <BrandTwitter size={18} color={"#FFFFFF"} />
             </ActionIcon>
-            <ActionIcon size="lg">
+            <ActionIcon component="a" href="https://youtube.com/" target="_blank" size="lg" variant="filled" color="blue">
               <BrandYoutube size={18} color={"#FFFFFF"} />
             </ActionIcon>
-            <ActionIcon size="lg">
+            <ActionIcon component="a" href="https://instagram.com/" target="_blank" size="lg" variant="filled" color="blue">
               <BrandInstagram size={18} color={"#FFFFFF"} />
             </ActionIcon>
           </Group>

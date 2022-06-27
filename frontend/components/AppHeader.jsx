@@ -17,13 +17,12 @@ import { useBooleanToggle } from "@mantine/hooks";
 import {
   Logout,
   Heart,
-  Star,
-  Message,
   Settings,
   PlayerPause,
   Trash,
   SwitchHorizontal,
   ChevronDown,
+  Bookmark,
 } from "tabler-icons-react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
@@ -177,15 +176,10 @@ export default function HeaderTabs({ user, tabs }) {
             }
           >
             <Menu.Item icon={<Heart size={14} color={theme.colors.red[6]} />}>
-              Liked posts
+              Liked menus
             </Menu.Item>
-            <Menu.Item icon={<Star size={14} color={theme.colors.yellow[6]} />}>
-              Saved posts
-            </Menu.Item>
-            <Menu.Item
-              icon={<Message size={14} color={theme.colors.blue[6]} />}
-            >
-              Your comments
+            <Menu.Item icon={<Bookmark size={14} color={theme.colors.yellow[6]} />}>
+              Saved menus
             </Menu.Item>
             <Divider />
             <Menu.Label>Settings</Menu.Label>

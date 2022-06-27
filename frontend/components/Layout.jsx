@@ -23,7 +23,7 @@ export default function Layout({ user, children }) {
         }}
         tabs={tabs}
       />
-      <Container>{children}</Container>
+      {children}
       <Footer />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { createStyles, Avatar, Text, Group } from "@mantine/core";
-import { At } from "tabler-icons-react";
+import { Mail } from "tabler-icons-react";
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -19,7 +19,7 @@ export default function UserInfoIcons({ avatar, name, title, email }) {
   const { classes } = useStyles();
   return (
     <Group noWrap>
-      <Avatar src={avatar} size={94} radius="md" />
+      <Avatar src={avatar} size={180} radius="md" />
       <div>
         <Text
           size="xs"
@@ -34,12 +34,19 @@ export default function UserInfoIcons({ avatar, name, title, email }) {
           {name}
         </Text>
 
-        <Group noWrap spacing={10} mt={3}>
-          <At size={16} className={classes.icon} />
+        <Group noWrap spacing={2} mt={3}>
+          <Mail size={16} className={classes.icon} />
           <Text size="xs" color="dimmed">
             {email}
           </Text>
         </Group>
+        <br />
+        <Text size="xs" color="dimmed">
+          Calorie: 2500kcal/day, <br />
+          Fat: 77g/day, <br />
+          Carbs: 325g/day, <br />
+          Protein: 60g/day
+        </Text>
       </div>
     </Group>
   );

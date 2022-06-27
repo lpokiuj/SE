@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   RingProgress,
   Text,
@@ -6,6 +6,9 @@ import {
   Paper,
   Center,
   Group,
+  Dialog,
+  TextInput,
+  Button,
 } from "@mantine/core";
 import { Flame, Droplet, Leaf, Dna } from "tabler-icons-react";
 
@@ -16,11 +19,27 @@ const icons = {
   dna: Dna,
 };
 
-export default function StatsRing({ data }) {
-  const stats = data.map((stat) => {
-    const Icon = icons[stat.icon];
-    return (
-      <Paper withBorder radius="md" p="xs" key={stat.label}>
+const SingleStatus = ({ stat }) => {
+  const [opened, setOpened] = useState(false);
+  const [value, setValue] = useState("");
+  const Icon = icons[stat.icon];
+
+  const handleUpdateClick = async () => {
+    if (value) {
+      await stat.update(parseInt(value));
+      setOpened(false);
+    }
+  }
+
+  return (
+    <>
+      <Paper
+        withBorder
+        radius="md"
+        p="xs"
+        component="button"
+        onClick={() => setOpened((o) => !o)}
+      >
         <Group>
           <RingProgress
             size={80}
@@ -44,7 +63,30 @@ export default function StatsRing({ data }) {
           </div>
         </Group>
       </Paper>
-    );
+
+      <Dialog
+        opened={opened}
+        withCloseButton
+        onClose={() => setOpened(false)}
+        size="lg"
+        radius="md"
+      >
+        <Text size="sm" style={{ marginBottom: 10 }} weight={500}>
+          Update {stat.label}
+        </Text>
+
+        <Group align="flex-end">
+          <TextInput style={{ flex: 1 }} value={value} onChange={(evt) => setValue(evt.target.value)} />
+          <Button onClick={() => handleUpdateClick()}>Update</Button>
+        </Group>
+      </Dialog>
+    </>
+  );
+};
+
+export default function StatsRing({ data }) {
+  const stats = data.map((stat) => {
+    return <SingleStatus key={stat.label} stat={stat} />;
   });
   return (
     <SimpleGrid cols={2} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>

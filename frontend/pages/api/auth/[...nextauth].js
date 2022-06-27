@@ -12,13 +12,23 @@ export default NextAuth({
       if (user) {
         return {
           ...token,
+          calorie: user.calorie,
+          carbohydrate: user.carbohydrate,
+          fat: user.fat,
+          protein: user.protein,
           accessToken: user.token,
         };
       }
       return token;
     },
     async session({ session, token }) {
-      return { ...session, token: token.accessToken };
+      session.user.calorie = token.calorie;
+      session.user.carbohydrate = token.carbohydrate;
+      session.user.fat = token.fat;
+      session.user.protein = token.protein;
+      session.token = token.accessToken;
+
+      return session;
     },
   },
   providers: [
@@ -45,6 +55,10 @@ export default NextAuth({
             id: data.user.id,
             name: data.user.name,
             email: data.user.email,
+            calorie: data.user.calorie,
+            carbohydrate: data.user.carbohydrate,
+            fat: data.user.fat,
+            protein: data.user.protein,
             token: data.token,
           };
         } catch (error) {
