@@ -1,8 +1,6 @@
 import HeaderTabs from "./AppHeader";
 import Footer from "./Footer";
 
-import { Container } from "@mantine/core";
-
 const tabs = [
   { link: "/home", label: "Home" },
   { link: "/meal-plan", label: "Meal Plan" },

@@ -90,9 +90,8 @@ const useStyles = createStyles((theme) => ({
   },
 
   tabControlActive: {
-    color: `${
-      theme.colorScheme === "dark" ? theme.white : theme.black
-    } !important`,
+    color: `${theme.colorScheme === "dark" ? theme.white : theme.black
+      } !important`,
     borderColor: `${theme.colors[theme.primaryColor][6]} !important`,
   },
 }));
@@ -163,26 +162,25 @@ export default function HeaderTabsUnverified({ user, tabs }) {
               icon={<Heart size={14} color={theme.colors.red[6]} />}
               onClick={() => router.push("/register")}
             >
-              Liked posts
+              Liked menus
             </Menu.Item>
             <Menu.Item
               icon={<Star size={14} color={theme.colors.yellow[6]} />}
               onClick={() => router.push("/register")}
             >
-              Saved Posts
-            </Menu.Item>
-            <Menu.Item
-              icon={<Message size={14} color={theme.colors.blue[6]} />}
-              onClick={() => router.push("/register")}
-            >
-              Your comments
+              Saved menus
             </Menu.Item>
             <Divider />
             <Menu.Label>Settings</Menu.Label>
-            <Menu.Item icon={<Settings size={14} />}>
+            <Menu.Item
+              icon={<Settings size={14} />}
+              onClick={() => router.push("/register")}
+            >
               Account settings
             </Menu.Item>
-            <Menu.Item icon={<SwitchHorizontal size={14} />}>
+            <Menu.Item
+              icon={<SwitchHorizontal size={14} />}
+              onClick={() => router.push("/register")}>
               Change account
             </Menu.Item>
             <Menu.Item icon={<Login size={14} />} onClick={() => signIn()}>

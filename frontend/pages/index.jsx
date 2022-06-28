@@ -12,7 +12,6 @@ import Link from "next/link";
 import HeaderTabsUnverified, {
   HEADER_HEIGHT,
 } from "../components/AppHeaderUnverified";
-import { useSession, signIn, signOut } from "next-auth/react";
 
 const useStyles = createStyles((theme) => ({
   wrapper: {
@@ -110,14 +109,6 @@ const user = {
   email: "",
   image: "",
 };
-const tabs = [
-  "Home",
-  "Meal Plan",
-  "Grocery List",
-  "Price List",
-  "Article",
-  "News",
-];
 
 export default function Index() {
   const { classes, cx } = useStyles();
@@ -143,26 +134,28 @@ export default function Index() {
           <Container size={640}>
             <Text size="lg" className={classes.description}>
               We're still on your browser for a while, but we'll get into your
-              smartphone soon always support PREPLAND to keep us growing
+              smartphone soon. Always support PREPLAND to keep us growing !!!
             </Text>
             <Text className={classes.description}>❤️❤️❤️</Text>
           </Container>
 
           <div className={classes.controls}>
             <Link href="/register" passHref>
-              <Button className={classes.control} variant="white" size="lg">
+              <Button mr={10} className={classes.control} variant="white" size="lg">
                 Get started
               </Button>
             </Link>
 
-            <Link href="https://youtube.com" passHref>
-              <Button
-                className={cx(classes.control, classes.secondaryControl)}
-                size="lg"
-              >
-                Live demo
-              </Button>
-            </Link>
+            <Button
+              ml={10}
+              component="a"
+              href="https://youtube.com"
+              target="_blank"
+              className={cx(classes.control, classes.secondaryControl)}
+              size="lg"
+            >
+              Live demo
+            </Button>
           </div>
         </div>
       </div>

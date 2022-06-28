@@ -9,7 +9,6 @@ import { useSetState } from "@mantine/hooks";
 import { getSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { fetcher } from "../config/fetcher";
-import axios from "axios";
 
 const mockCategoryData = [
   {

@@ -88,8 +88,8 @@ export default function Register() {
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <TextInput
-            label="Name"
-            placeholder="name"
+            label="Username"
+            placeholder="username"
             size="md"
             required
             {...form.getInputProps("name")}
@@ -126,11 +126,6 @@ export default function Register() {
             REGISTER
           </Button>
         </form>
-        {/* <Link href="/home" passHref>
-          <Button fullWidth mt="xl">
-            REGISTER
-          </Button>
-        </Link> */}
       </Paper>
     </Container>
   );
